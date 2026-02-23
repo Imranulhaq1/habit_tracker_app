@@ -11,51 +11,46 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isLoginSelected = true;
-  double height() => MediaQuery.of(context).size.height;
-  double width() => MediaQuery.of(context).size.width;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+        //child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 70), // half logo height
+                child: Column(
                   children: [
-                    SizedBox(height: 10),
-                    Stack(
-                      children: [
-                        Image(
-                          height: 200,
-                          width: 250,
-                          image: AssetImage('assets/log1.png'),
-                          // height: 150,
-                        ),
-                      ],
-                    ),
-                    //SizedBox(height: 0),
                     Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      elevation: 4,
+                      elevation: 5,
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            Text(
+                            /// SPACE FOR LOGO (IMPORTANT)
+                            const SizedBox(height: 80),
+
+                            const Text(
                               'Welcome Back!',
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text('Login to Continue'),
-                            SizedBox(height: 10),
+
+                            const Text('Login to Continue'),
+
+                            const SizedBox(height: 10),
+
                             TopLoginSignup(
                               isLoginSelected: isLoginSelected,
                               onChanged: (value) {
@@ -64,11 +59,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               },
                             ),
-                            SizedBox(height: 20),
+
+                            const SizedBox(height: 20),
+
                             if (!isLoginSelected)
                               CustomTextField(
                                 hintText: 'Username',
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.person,
                                   color: Colors.green,
                                 ),
@@ -76,52 +73,46 @@ class _LoginScreenState extends State<LoginScreen> {
                                 obscureText: false,
                                 keyboardType: TextInputType.text,
                               ),
-                            SizedBox(height: 10),
 
-                            /// Email Field
+                            const SizedBox(height: 10),
+
+                            /// Email
                             CustomTextField(
                               hintText: "Email",
                               controller: TextEditingController(),
-                              prefixIcon: Column(
-                                children: [
-                                  if (!isLoginSelected)
-                                    Icon(
-                                      Icons.email,
-                                      color: !isLoginSelected
-                                          ? Colors.blue
-                                          : Colors.green,
-                                    ),
-                                ],
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: isLoginSelected
+                                    ? Colors.blue
+                                    : Colors.green,
                               ),
                               obscureText: false,
                               keyboardType: TextInputType.emailAddress,
                             ),
-                            SizedBox(height: 10),
+
+                            const SizedBox(height: 10),
+
+                            /// Password
                             CustomTextField(
                               hintText: "Password",
-                              prefixIcon: Column(
-                                children: [
-                                  if (!isLoginSelected)
-                                    Icon(
-                                      Icons.lock,
-                                      color: !isLoginSelected
-                                          ? Colors.blue
-                                          : Colors.green,
-                                    ),
-                                ],
-                              ),
                               controller: TextEditingController(),
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: isLoginSelected
+                                    ? Colors.blue
+                                    : Colors.green,
+                              ),
                               obscureText: true,
                               keyboardType: TextInputType.visiblePassword,
                             ),
 
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
 
-                            /// Confirm Password (Only for SignUp)
+                            /// Confirm Password
                             if (!isLoginSelected)
                               CustomTextField(
                                 hintText: "Confirm Password",
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.lock,
                                   color: Colors.green,
                                 ),
@@ -129,67 +120,179 @@ class _LoginScreenState extends State<LoginScreen> {
                                 obscureText: true,
                                 keyboardType: TextInputType.visiblePassword,
                               ),
-                            SizedBox(height: 15),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 0,
+                                horizontal: 40,
+                              ),
+                              child: TextButton(
+                                onPressed: () {},
+
+                                child: Text(
+                                  isLoginSelected ? 'Forgot Password?' : '',
+                                ),
+                              ),
+                            ),
+                            //const SizedBox(height: 10),
 
                             /// Button
                             SizedBox(
                               width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: Text(
-                                  isLoginSelected ? "Login" : "Sign Up",
+                              child: ShaderMask(
+                                shaderCallback: (Rect bounds) {
+                                  return const LinearGradient(
+                                    colors: [
+                                      Color.fromARGB(255, 27, 20, 231),
+                                      Color.fromARGB(255, 48, 134, 204),
+                                      Color.fromARGB(255, 36, 220, 220),
+                                      Color.fromARGB(255, 18, 201, 45),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ).createShader(bounds);
+                                },
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    // backgroundColor: const Color.fromARGB(
+                                    //   255,
+                                    //   166,
+                                    //   210,
+                                    //   246,
+                                    // ),
+                                  ),
+                                  onPressed: () {},
+                                  child: Text(
+                                    isLoginSelected ? "Login" : "Sign Up",
+                                  ),
                                 ),
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text('-----Forgot Password?-----'),
-                            ),
                             SizedBox(height: 10),
-                            Text("Don't have an account? Sign Up"),
+                            Text('_________Or Continue With_________'),
                             SizedBox(height: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  isLoginSelected = !isLoginSelected;
-                                });
-                              },
-                              child: Text(
-                                isLoginSelected ? "Sign Up" : "Login",
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  height: 40,
+
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    //shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 5,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.facebook, color: Colors.black),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        'Facebook',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Container(
+                                  height: 40,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 30,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    //shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 5,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.linked_camera_rounded,
+                                        color: Colors.black,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        'Google',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  isLoginSelected
+                                      ? "Don't have an account?"
+                                      : "I already have account",
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isLoginSelected = !isLoginSelected;
+                                    });
+                                  },
+                                  child: Text(
+                                    isLoginSelected ? "Sign Up" : "Login",
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Image(image: AssetImage('assets/log4.png')),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Text("-----Or continue with-----"),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.facebook, color: Colors.blue),
-                        ),
-                        SizedBox(width: 20),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.search, color: Colors.red),
-                        ),
-                        SizedBox(width: 20),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.apple, color: Colors.black),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+
+              Positioned(
+                top: 0,
+                child: Container(
+                  height: 200,
+                  width: 250,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 20,
+                        color: Colors.black26,
+                        offset: Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(0),
+                    child: Image.asset('assets/log1.png', fit: BoxFit.contain),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+        // ),
       ),
     );
   }
