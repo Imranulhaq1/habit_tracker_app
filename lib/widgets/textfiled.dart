@@ -21,6 +21,7 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.border,
     this.errorText,
+    required int elevation,
   });
 
   @override

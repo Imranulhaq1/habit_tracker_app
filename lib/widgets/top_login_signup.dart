@@ -8,6 +8,7 @@ class TopLoginSignup extends StatelessWidget {
     super.key,
     required this.isLoginSelected,
     required this.onChanged,
+    required int elevation,
   });
 
   @override
